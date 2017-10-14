@@ -15,7 +15,7 @@
 		}
 		leijp = 1;
 	</script>
-	<body>
+	<body onload="init()">
 Hier zijn een paar vragen die we nauw wel EGT ff wille stelle aan jauw. Als eerste een vraag over kopiëer-hotkeys die je tegelijk met shift indrukt:
 <br/>
 
@@ -27,9 +27,8 @@ var a = "hey kerl moowje koode zit ik effe in elkær te feitsen he",
 	c = "dit is tog wel leuk ofz om dit effentjes lekker te zitte puzzeln tog".
 
 split(' ');
-a = ["goeiiie", "moaghe"][1];
-
 sgijt = 123;
+a = ["goeiiie", "moaghe"][1];
 
 checkdiecode.onclick = function() {
 	var ans = prompt("zeau kerl hoeveel is 42 * 42 maar dan met een sguine streep in plaats van een ster?");
@@ -40,7 +39,8 @@ checkdiecode.onclick = function() {
 	else
 		alert("nou joh kennie niet ff serieus n antweurd geeve?");
 }
-
+</script>
+<pre style="display:none;" id="skropt">
 var x = a.length - b;
 
 var ans = x
@@ -60,12 +60,21 @@ Dus mottie maar eens kijken wat voor n sgijt ik hier heb zitte bauwe:
 
 *ans + 2;
 ans = c.length;
-vorm.onsubmit = function(e) {
-	if (antweurdt.value == -ans - sgijt)
+sub_mid = function(e) {
+	if (antweurdt.value == this) // dus je mot wel t antweurd wat `this` is invulle
 		if (confirm("gefeeliesieteerd! Gaat maar lekker door naar die vollegende vraag!"))
 			document.location.href = 'tweede.html';
 	e.preventDefault();
 	return 0;
+}
+ANS =- ans - sgijt;
+window.test = 1;
+</pre>
+<script type="text/javascript">
+function init() {
+	eval(skropt.innerHTML);
+	vorm.onsubmit = sub_mid.bind(ANS);
+	delete ANS; //niet spieken
 }
 </script>
 	</body>
