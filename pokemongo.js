@@ -45,11 +45,16 @@ function getList(callback) {
   });
 }
 
-function getPokemon(callback) {
+function excludeList() {
   var exclude = [];
   $('#pokemons option').each(function() {
     if (!this.selected) exclude.push(this.value);
   });
+  return exclude;
+}
+
+function getPokemon(callback) {
+  var exclude = excludeList();
   var latlong = [parseFloat($('#lat').val()), parseFloat($('#lon').val())];
   var r = parseFloat($('#r').val());
   xors('http://'+city+'.pokehunt.me/raw_data', {
@@ -104,5 +109,8 @@ $(function() {
   getList();
   $('#submit').click(function() {
     getPokemon(showData);
+  });
+  $('#pokemons').on('change', function() {
+    document.cookie = excludeList(); // TODO: manage cookies more cleanly
   });
 });
