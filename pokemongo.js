@@ -23,7 +23,7 @@ function pad0(n) {
 window.city = 'amsterdam';
 
 function xors(url, req, callback) {
-  var site = 'http://cors-anywhere.herokuapp.com/';
+  var site = 'https://cors-anywhere.herokuapp.com/';
   //site = 'http://whateverorigin.org/get?callback=?&url=';
   //site = 'http://anyorigin.com/go/?callback=?&url=';
   $.ajax({
