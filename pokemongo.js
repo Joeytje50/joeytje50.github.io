@@ -103,7 +103,7 @@ $(function() {
   });
   navigator.geolocation.getCurrentPosition(function(position) {
     $('#lat').val(position.coords.latitude);
-    $('#lng').val(position.coords.longitude);
+    $('#lon').val(position.coords.longitude);
   });
   $('#range').html($('#r').val());
   getList(function() {
