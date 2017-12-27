@@ -41,7 +41,7 @@ function getList(callback) {
     for (var i=0;i<386;i++) { // 386 = # of gen 3 pokemon
       $('<option value="'+(i-1)+'">'+data[i]+'</option>').appendTo($pokemons);
     }
-    callback();
+    callback ? callback() : null;
   });
 }
 
