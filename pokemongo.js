@@ -45,10 +45,10 @@ function getList(callback) {
   });
 }
 
-function excludeList() {
+function excludeList(includelist) {
   var exclude = [];
   $('#pokemons option').each(function() {
-    if (!this.selected) exclude.push(this.value);
+    if ((includelist && this.selected) || !this.selected) exclude.push(this.value);
   });
   return exclude;
 }
@@ -111,7 +111,7 @@ $(function() {
     getPokemon(showData);
   });
   $('#pokemons').on('change', function() {
-    document.cookie = excludeList(); // TODO: manage cookies more cleanly
+    document.cookie = excludeList(true); // TODO: manage cookies more cleanly
   });
   for (var i in document.cookie.split(',')) {
     $('#pokemons option').eq(i).prop('selected', true);
