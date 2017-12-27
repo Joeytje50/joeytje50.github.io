@@ -106,14 +106,15 @@ $(function() {
     $('#lng').val(position.coords.longitude);
   });
   $('#range').html($('#r').val());
-  getList();
+  getList(function() {
+    for (var i in document.cookie.split(',')) {
+      $('#pokemons option').eq(i).prop('selected', true);
+    }
+  });
   $('#submit').click(function() {
     getPokemon(showData);
   });
   $('#pokemons').on('change', function() {
     document.cookie = excludeList(true); // TODO: manage cookies more cleanly
   });
-  for (var i in document.cookie.split(',')) {
-    $('#pokemons option').eq(i).prop('selected', true);
-  }
 });
