@@ -96,4 +96,13 @@ $(function() {
   $('#r').on('mousemove', function() {
     $('#range').html(this.value);
   });
+  navigator.geolocation.getCurrentPosition(function(position) {
+    $('#lat').val(position.coords.latitude);
+    $('#lng').val(position.coords.longitude);
+  });
+  $('#range').html($('#r').val());
+  getList();
+  $('#submit').click(function() {
+    getPokemon(showData);
+  });
 });
