@@ -48,7 +48,7 @@ function getList(callback) {
 function excludeList(includelist) {
   var exclude = [];
   $('#pokemons option').each(function() {
-    if ((includelist && this.selected) || !this.selected) exclude.push(this.value);
+    if ((includelist ^ !this.selected)) exclude.push(this.value);
   });
   return exclude;
 }
