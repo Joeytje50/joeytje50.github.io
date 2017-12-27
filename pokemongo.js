@@ -39,7 +39,7 @@ function getList(callback) {
   xors('http://raw.githubusercontent.com/sindresorhus/pokemon/master/data/en.json', {}, function(data) {
     var $pokemons = $('#pokemons');
     for (var i=0;i<386;i++) { // 386 = # of gen 3 pokemon
-      $('<option value="'+(i-1)+'">'+data[i]+'</option>').appendTo($pokemons);
+      $('<option value="'+i+'">'+data[i]+'</option>').appendTo($pokemons);
     }
     callback ? callback() : null;
   });
@@ -113,4 +113,7 @@ $(function() {
   $('#pokemons').on('change', function() {
     document.cookie = excludeList(); // TODO: manage cookies more cleanly
   });
+  for (var i in document.cookie.split(',')) {
+    $('#pokemons option').eq(i).prop('selected', true);
+  }
 });
