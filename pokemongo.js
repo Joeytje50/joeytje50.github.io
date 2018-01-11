@@ -53,14 +53,15 @@ function excludeList(includelist) {
 
 function getPokemon(callback) {
   var exclude = excludeList();
-  var latlong = [parseFloat($('#lat').val()), parseFloat($('#lon').val())];
+  window.lat = parseFloat($('#lat').val());
+  window.lon = parseFloat($('#lon').val());
   var r = parseFloat($('#r').val());
   xors('http://'+city+'.pokehunt.me/raw_data', {
     pokemon: true,
-    swLat: latlong[0] - r,
-    swLng: latlong[1] - r,
-    neLat: latlong[0] + r,
-    neLng: latlong[1] + r,
+    swLat: lat - r,
+    swLng: lon - r,
+    neLat: lat + r,
+    neLng: lon + r,
     eids: exclude.join(','),
   }, function(data) {
     callback(data);
@@ -69,8 +70,6 @@ function getPokemon(callback) {
 
 function sortPokemon(a, b) {
   var sortcol = $('#sortcol').prop('cellIndex');
-  var lat = parseFloat($('#lat').val());
-  var lon = parseFloat($('#lon').val());
   var sortprop;
   switch (sortcol) {
     case 0: return parseInt(a.pokemon_id) > parseInt(b.pokemon_id); break;
