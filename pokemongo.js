@@ -124,13 +124,13 @@ function showData(data) {
 
 $(function() {
   $('#r').on('mousemove', function() {
-    $('#range').html(this.value);
+    $('#radius').html(this.value);
   });
   navigator.geolocation.getCurrentPosition(function(position) {
     $('#lat').val(position.coords.latitude);
     $('#lon').val(position.coords.longitude);
   });
-  $('#range').html($('#r').val());
+  $('#radius').html($('#r').val());
   getList(function() {
     for (var i in document.cookie.split(',')) {
       $('#pokemons option').eq(i).prop('selected', true);
