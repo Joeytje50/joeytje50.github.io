@@ -71,7 +71,7 @@ function sortPokemon(a, b) {
   var sortcol = $('.sortcol').prop('cellIndex')
   var sortprop;
   switch (sortcol) {
-    case 0: prop = 'pokemon_id'; break;
+    case 0: return parseInt(a.pokemon_id) > parseInt(b.pokemon_id); break;
     case 1: prop = 'pokemon_name'; break;
     case 2: return distance(lat, lon, a.latitude, a.longitude) > distance(lat, lon, b.latitude, b.longitude); break;
     case 3: return parseInt(a.disappear_time) > parseInt(b.disappear_time); break;
