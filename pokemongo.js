@@ -3,11 +3,9 @@ function distance(lat1,lon1,lat2,lon2) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2-lat1);  // deg2rad below
   var dLon = deg2rad(lon2-lon1); 
-  var a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-    Math.sin(dLon/2) * Math.sin(dLon/2)
-    ; 
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+          Math.sin(dLon/2) * Math.sin(dLon/2); 
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
   var d = R * c; // Distance in km
   return d * 1000; // distance in m
@@ -69,7 +67,33 @@ function getPokemon(callback) {
   });
 }
 
+function sortPokemon(a, b) {
+  var sortcol = $('.sortcol').prop('cellIndex')
+  var sortprop;
+  switch (sortcol) {
+    case 0: prop = 'pokemon_id'; break;
+    case 1: prop = 'pokemon_name'; break;
+    case 2: return distance(lat, lon, a.latitude, a.longitude) > distance(lat, lon, b.latitude, b.longitude); break;
+    case 3: return parseInt(a.disappear_time) > parseInt(b.disappear_time); break;
+    case 4: prop = 'gender'; break;
+    case 5: prop = 'cp'; break;
+    case 6: 
+      return (a.individual_attack + a.individual_defense + a.individual_stamina) >
+             (b.individual_attack + b.individual_defense + b.individual_stamina);
+      break;
+    case 7: prop = 'individual_attack'; break;
+    case 8: prop = 'individual_defense'; break;
+    case 9: prop = 'individual_stamina'; break;
+    default: prop = 'pokemon_id'; break;
+  }
+  return a[prop] > b[prop];
+}
+
 function showData(data) {
+  var lat = parseFloat($('#lat').val());
+  var lon = parseFloat($('#lon').val());
+  var mons = data.pokemons;
+  mons.sort(sortPokemon);
   for (var i in data.pokemons) {
     var mon = data.pokemons[i];
     var d = new Date(mon.disappear_time);
@@ -77,7 +101,7 @@ function showData(data) {
     $('<td>'+mon.pokemon_id+'</td>').appendTo($tr);
     $('<td>'+mon.pokemon_name+'</td>').appendTo($tr);
     $('<td><a href="http://www.google.com/maps/place/'+mon.latitude+','+mon.longitude+'">'+
-      distance(parseFloat($('#lat').val()), parseFloat($('#lon').val()), mon.latitude, mon.longitude).toFixed(0)+'m'+
+      distance(lat, lon, mon.latitude, mon.longitude).toFixed(0)+'m'+
       '</a></td>').appendTo($tr);
     $('<td>'+
       pad0(d.getMonth())+'/'+
@@ -87,12 +111,13 @@ function showData(data) {
       pad0(d.getSeconds())+
       '</td>').appendTo($tr);
     $('<td>'+(mon.gender == 1 ? '♂' : '♀')+'</td>').appendTo($tr);
-    $('<td>'+(mon.cp?mon.cp:'?')+'</td>').appendTo($tr); // use CP to check if the stats of the pokemon are known
-    $('<td>'+(mon.cp?mon.level:'?')+'</td>').appendTo($tr); // no CP known => no other stats known
-    $('<td>'+((mon.individual_attack+mon.individual_defense+mon.individual_stamina)/0.45).toFixed(0)+'</td>').appendTo($tr);
-    $('<td>'+mon.individual_attack+'</td>').appendTo($tr);
-    $('<td>'+mon.individual_defense+'</td>').appendTo($tr);
-    $('<td>'+mon.individual_stamina+'</td>').appendTo($tr);
+    $('<td>'+(mon.cp?mon.cp:'-')+'</td>').appendTo($tr); // use CP to check if the stats of the pokemon are known
+    $('<td>'+(mon.cp?mon.level:'-')+'</td>').appendTo($tr); // no CP known => no other stats known
+    var iv = mon.cp ? ((mon.individual_attack+mon.individual_defense+mon.individual_stamina)/0.45).toFixed(0) + '%' : '-';
+    $('<td>'+iv+'</td>').appendTo($tr);
+    $('<td>'+(mon.cp?mon.individual_attack:'-')+'</td>').appendTo($tr);
+    $('<td>'+(mon.cp?mon.individual_defense:'-')+'</td>').appendTo($tr);
+    $('<td>'+(mon.cp?mon.individual_stamina:'-')+'</td>').appendTo($tr);
     $tr.appendTo('#output');
   }
 }
@@ -112,6 +137,11 @@ $(function() {
     }
   });
   $('#submit').click(function() {
+    getPokemon(showData);
+  });
+  $('th').click(function() {
+    $('#sortcol').removeAttr('id');
+    $(this).attr('id', 'sortcol');
     getPokemon(showData);
   });
   $('#pokemons').on('change', function() {
