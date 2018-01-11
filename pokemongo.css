@@ -9,3 +9,18 @@ table td, table th {
   margin: 0;
   white-space: nowrap;
 }
+
+col {
+  text-align: center;
+}
+td:nth-child(2), td:nth-child(3), td:nth-child(4) {
+  text-align: left;
+}
+
+/* Sortable table */
+table.sortable th {
+  cursor: pointer;
+}
+table.sortable th.sortcol {
+  text-decoration: underline;
+}
