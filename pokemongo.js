@@ -69,6 +69,8 @@ function getPokemon(callback) {
 
 function sortPokemon(a, b) {
   var sortcol = $('#sortcol').prop('cellIndex');
+  var lat = parseFloat($('#lat').val());
+  var lon = parseFloat($('#lon').val());
   var sortprop;
   switch (sortcol) {
     case 0: return parseInt(a.pokemon_id) > parseInt(b.pokemon_id); break;
@@ -90,8 +92,6 @@ function sortPokemon(a, b) {
 }
 
 function showData(data) {
-  var lat = parseFloat($('#lat').val());
-  var lon = parseFloat($('#lon').val());
   var mons = data.pokemons;
   mons.sort(sortPokemon);
   $('#output tr ~ tr').remove();
