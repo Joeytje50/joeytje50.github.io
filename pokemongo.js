@@ -68,7 +68,7 @@ function getPokemon(callback) {
 }
 
 function sortPokemon(a, b) {
-  var sortcol = $('.sortcol').prop('cellIndex')
+  var sortcol = $('#sortcol').prop('cellIndex');
   var sortprop;
   switch (sortcol) {
     case 0: return parseInt(a.pokemon_id) > parseInt(b.pokemon_id); break;
@@ -84,7 +84,7 @@ function sortPokemon(a, b) {
     case 7: prop = 'individual_attack'; break;
     case 8: prop = 'individual_defense'; break;
     case 9: prop = 'individual_stamina'; break;
-    default: prop = 'pokemon_id'; break;
+    default: return parseInt(a.pokemon_id) > parseInt(b.pokemon_id); break;
   }
   return a[prop] > b[prop];
 }
