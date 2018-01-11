@@ -70,24 +70,31 @@ function getPokemon(callback) {
 
 function sortPokemon(a, b) {
   var sortcol = $('#sortcol').prop('cellIndex');
-  var sortprop;
+  var sortprop, direction = 1; // set direction=-1 for reverse sort
   switch (sortcol) {
-    case 0: return parseInt(a.pokemon_id) > parseInt(b.pokemon_id); break;
-    case 1: prop = 'pokemon_name'; break;
+    case 0: prop = 'pokemon_id'; direction = -1; break;
+    case 1: prop = 'pokemon_name'; direction = -1; break;
     case 2: return distance(lat, lon, a.latitude, a.longitude) > distance(lat, lon, b.latitude, b.longitude) ? 1 : -1; break;
     case 3: return parseInt(a.disappear_time) > parseInt(b.disappear_time) ? 1 : -1; break;
     case 4: prop = 'gender'; break;
     case 5: prop = 'cp'; break;
-    case 6: 
+    case 6: prop = 'level'; break;
+    case 7: 
       return (a.individual_attack + a.individual_defense + a.individual_stamina) >
-             (b.individual_attack + b.individual_defense + b.individual_stamina) ? 1 : -1;
+             (b.individual_attack + b.individual_defense + b.individual_stamina) ? -1 : 1;
       break;
-    case 7: prop = 'individual_attack'; break;
-    case 8: prop = 'individual_defense'; break;
-    case 9: prop = 'individual_stamina'; break;
-    default: return parseInt(a.pokemon_id) > parseInt(b.pokemon_id) ? 1 : -1; break;
+    case 8: prop = 'individual_attack'; break;
+    case 9: prop = 'individual_defense'; break;
+    case 10: prop = 'individual_stamina'; break;
+    default: prop = 'pokemon_id'; direction = -1; break;
   }
-  return a[prop] > b[prop] ? 1 : -1;
+  var propa = a[prop] == null ? 0 : a[prop];
+  var propb = b[prop] == null ? 0 : b[prop];
+  if (isNaN(parseInt(propa))) {
+    return (propa > propb ? 1 : -1) * direction;
+  } else {
+    return (parseInt(propa) < parseInt(propb) ? 1 : -1) * direction;
+  }
 }
 
 function showData(data) {
