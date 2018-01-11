@@ -94,6 +94,7 @@ function showData(data) {
   var lon = parseFloat($('#lon').val());
   var mons = data.pokemons;
   mons.sort(sortPokemon);
+  $('#output tr ~ tr').remove();
   for (var i in data.pokemons) {
     var mon = data.pokemons[i];
     var d = new Date(mon.disappear_time);
