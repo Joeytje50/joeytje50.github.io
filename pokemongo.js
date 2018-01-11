@@ -95,7 +95,7 @@ function showData(data) {
   var mons = data.pokemons;
   mons.sort(sortPokemon);
   $('#output tr ~ tr').remove();
-  for (var i in data.pokemons) {
+  for (var i in mons) {
     var mon = data.pokemons[i];
     var d = new Date(mon.disappear_time);
     var $tr = $('<tr/>').data('despawn', mon.disappear_time);
