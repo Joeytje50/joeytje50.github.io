@@ -34,8 +34,14 @@ body {
   margin: 0;
   padding: 8px;
 }
-#pokemons {
+.selectBox {
   float: right;
   height: 500px;
   height: calc(100% - 16px);
+  overflow-y: auto;
+  border: 1px solid #a9a9a9;
+}
+.selectBox select {
+  border: none;
+  overflow: visible;
 }
