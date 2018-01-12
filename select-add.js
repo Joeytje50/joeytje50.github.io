@@ -1,9 +1,6 @@
 // Copyright (c) 2018 Joeytje50. All rights reserved.
 // This code is licenced under GNU GPL3+; see <http://www.gnu.org/licenses/>
 
-// Original code on my gist at:
-// https://gist.github.com/Joeytje50/2b73f9ac47010e7fdc5589788b80af77
-
 // select all <options> within `sel` in the range [from,to]
 // change their state to the state sel.options[from] is in,
 // ie. change it to the current state of the first selected element
@@ -27,6 +24,7 @@ function selectRange(sel, from, to) {
 $(function() {
   $('.addSelect').data('select-start', 0); // default selection start
   $('.addSelect').on('mousedown', function(e) {
+    $(this).focus();
     // clicking on the edge of the <select> shouldn't do anything special
     if (!$(e.target).is('option')) return;
     // if Ctrl is pressed, just let the built-in functionality take over
