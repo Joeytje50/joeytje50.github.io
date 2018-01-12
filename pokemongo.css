@@ -29,8 +29,13 @@ table.sortable th#sortcol {
 html, body {
   height: 100%;
 }
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 8px;
+}
 #pokemons {
   float: right;
   height: 500px;
-  height: calc(100% - 15px);
+  height: calc(100% - 16px);
 }
