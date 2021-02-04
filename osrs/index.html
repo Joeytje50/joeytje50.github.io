@@ -14,6 +14,7 @@ html, body {
 	--grayscale: 0%;
 	--sepia: 0%;
 	--opacity: 100%;
+	--shadow: 0px 0px #000;
 }
 [title] {
 	cursor: help;
@@ -21,10 +22,9 @@ html, body {
 #map {
 	width: 100%;
 	height: calc(100% - 4em);
-	overflow: scroll;
+	overflow: hidden;
 	cursor: grab;
 	position: relative;
-	transform: rotateX(180deg);
 }
 #map:active {
 	cursor: grabbing;
@@ -35,7 +35,6 @@ html, body {
 	position: absolute;
 	top: 0;
 	left: 0;
-	transform: rotateX(180deg);
 	filter: blur(var(--blur)) brightness(var(--darken)) contrast(var(--contrast)) grayscale(var(--grayscale)) sepia(var(--sepia)) opacity(var(--opacity));
 }
 #map img:first-child {
@@ -52,7 +51,8 @@ html, body {
 #layer1:checked ~ #map img:nth-child(2),
 #layer2:checked ~ #map img:nth-child(3),
 #layer3:checked ~ #map img:nth-child(4) {
-	filter: none !important; /* no filter for current layer ever */
+	/* no other filters for current layer ever */
+	filter: drop-shadow(var(--shadow)) !important;
 }
 
 #blur2:checked ~ #map img { --blur: 2px; }
@@ -66,13 +66,15 @@ html, body {
 #sepia:checked ~ #map img { --sepia: 100%; }
 #opacity:checked ~ #map img + img { --opacity: 50%; }
 #hide:checked ~ #map img + img { --opacity: 0%; }
+#shadow:checked ~ #map img { --shadow: 2px 2px 3px #000; }
 
 	</style>
 	<script>
 
 function getChecked() {
 	var inp = document.querySelectorAll(':checked');
-	var ids = [];
+	var map = document.getElementById('map');
+	var ids = ['x=' + map.scrollLeft, 'y=' + map.scrollTop];
 	for (var i of inp) {
 		ids.push(i.id);
 	}
@@ -82,17 +84,23 @@ function getChecked() {
 document.addEventListener('DOMContentLoaded', (event) => {
     window.mousedown = false;
 	var map = document.getElementById('map');
-	map.scrollTop = 3000;
-	map.scrollLeft = 6750;
-
 	var hash = document.location.hash.substr(1).split(',');
-	console.log(hash);
+
 	for (var h of hash) {
 		let id = document.getElementById(h);
-		if (id) {
+		if (h[1] == '=') {
+			let pos = parseInt(h.substr(2));
+			if (h[0] == 'x') {
+				map.scrollLeft = pos;
+			} else if (h[0] == 'y') {
+				map.scrollTop = pos;
+			}
+		} else if (id) {
 			id.checked = true;
-		} else {console.log(id, h)}
+		}
 	}
+	map.scrollTop = map.scrollTop || 3000;
+	map.scrollLeft = map.scrollLeft || 6750;
 	document.location.hash = getChecked().join(',')
 
 	onmousedown = function(e) {
@@ -103,12 +111,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	}
 	onmouseup = function(e) {
 		window.mousedown = false;
+		document.location.hash = getChecked().join(',');
 	}
 
 	onmousemove = function(e) {
 		if (window.mousedown) {
 			var map = document.getElementById('map');
-			map.scrollTop += e.movementY;
+			map.scrollTop -= e.movementY;
 			map.scrollLeft -= e.movementX;
 		}
 	}
@@ -124,16 +133,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
 </head>
 <body>
 <input type="checkbox" id="blur2"><label for="blur2">Blur 2px</label>
-<input type="checkbox" id="blur5" checked><label for="blur5">Blur 5px</label>
+<input type="checkbox" id="blur5"><label for="blur5">Blur 5px</label>
 <input type="checkbox" id="darken15"><label for="darken15">Darken 15%</label>
 <input type="checkbox" id="darken30"><label for="darken30">Darken 30%</label>
 <input type="checkbox" id="contrast50"><label for="contrast50">Low contrast 80%</label>
 <input type="checkbox" id="contrast100"><label for="contrast100">Low contrast 50%</label>
 <input type="checkbox" id="gray50"><label for="gray50">Grayscale 50%</label>
-<input type="checkbox" id="gray100" checked><label for="gray100">Grayscale 100%</label>
+<input type="checkbox" id="gray100"><label for="gray100">Grayscale 100%</label>
 <input type="checkbox" id="sepia"><label for="sepia">Sepia 100%</label>
-<input type="checkbox" id="opacity"><label for="opacity" title="Applies an opacity filter to *only* the intermediate layers; if only layer 0 and 1 are shown, this does nothing.">Opacity 50% (intermediate layers)</label>
+<input type="checkbox" id="opacity"><label for="opacity" title="Apply an opacity filter to *only* the intermediate layers; if only layer 0 and 1 are shown, this does nothing.">Opacity 50% (intermediate layers)</label>
 <input type="checkbox" id="hide"><label for="hide">Hide intermediate</label>
+<input type="checkbox" id="shadow"><label for="shadow" title="Apply drop shadow to current layer only.">Drop shadow</label>
 <br/>
 <input type="radio" name="layer" id="layer0"><label for="layer0">Surface</label>
 <input type="radio" name="layer" id="layer1"><label for="layer1">Layer 1</label>
