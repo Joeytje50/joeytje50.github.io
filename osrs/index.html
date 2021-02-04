@@ -24,6 +24,7 @@ html, body {
 	overflow: scroll;
 	cursor: grab;
 	position: relative;
+	transform: rotateX(180deg);
 }
 #map:active {
 	cursor: grabbing;
@@ -34,6 +35,7 @@ html, body {
 	position: absolute;
 	top: 0;
 	left: 0;
+	transform: rotateX(180deg);
 	filter: blur(var(--blur)) brightness(var(--darken)) contrast(var(--contrast)) grayscale(var(--grayscale)) sepia(var(--sepia)) opacity(var(--opacity));
 }
 #map img:first-child {
