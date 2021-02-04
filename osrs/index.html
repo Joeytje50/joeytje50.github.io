@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>OSRS World Layers</title>
+	<style>
+html, body {
+	height: 100%;
+	user-select: none;
+	overflow: hidden;
+	/* filter vars */
+	--blur: 0px;
+	--darken: 100%;
+	--contrast: 100%;
+	--grayscale: 0%;
+	--sepia: 0%;
+	--opacity: 100%;
+}
+[title] {
+	cursor: help;
+}
+#map {
+	width: 100%;
+	height: calc(100% - 4em);
+	overflow: scroll;
+	cursor: grab;
+	position: relative;
+}
+#map:active {
+	cursor: grabbing;
+}
+#map img {
+	width: 11008px;
+	height: 6656px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	filter: blur(var(--blur)) brightness(var(--darken)) contrast(var(--contrast)) grayscale(var(--grayscale)) sepia(var(--sepia)) opacity(var(--opacity));
+}
+#map img:first-child {
+	position: static;
+}
+
+#layer0:checked ~ #map img:nth-child(1) ~ img,
+#layer1:checked ~ #map img:nth-child(2) ~ img,
+#layer2:checked ~ #map img:nth-child(3) ~ img {
+	display: none;
+}
+
+#layer0:checked ~ #map img:nth-child(1),
+#layer1:checked ~ #map img:nth-child(2),
+#layer2:checked ~ #map img:nth-child(3),
+#layer3:checked ~ #map img:nth-child(4) {
+	filter: none !important; /* no filter for current layer ever */
+}
+
+#blur2:checked ~ #map img { --blur: 2px; }
+#blur5:checked ~ #map img { --blur: 5px; }
+#darken15:checked ~ #map img { --darken: 85%; }
+#darken30:checked ~ #map img { --darken: 70%; }
+#contrast50:checked ~ #map img { --contrast: 80%; }
+#contrast100:checked ~ #map img { --contrast: 50%; }
+#gray50:checked ~ #map img { --grayscale: 50%; }
+#gray100:checked ~ #map img { --grayscale: 100%; }
+#sepia:checked ~ #map img { --sepia: 100%; }
+#opacity:checked ~ #map img + img { --opacity: 50%; }
+#hide:checked ~ #map img + img { --opacity: 0%; }
+
+	</style>
+	<script>
+
+function getChecked() {
+	var inp = document.querySelectorAll(':checked');
+	var ids = [];
+	for (var i of inp) {
+		ids.push(i.id);
+	}
+	return ids;
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    window.mousedown = false;
+	var map = document.getElementById('map');
+	map.scrollTop = 3000;
+	map.scrollLeft = 6750;
+
+	var hash = document.location.hash.substr(1).split(',');
+	console.log(hash);
+	for (var h of hash) {
+		let id = document.getElementById(h);
+		if (id) {
+			id.checked = true;
+		} else {console.log(id, h)}
+	}
+	document.location.hash = getChecked().join(',')
+
+	onmousedown = function(e) {
+		if (e.target instanceof HTMLImageElement) {
+			e.preventDefault();
+			window.mousedown = true;
+		}
+	}
+	onmouseup = function(e) {
+		window.mousedown = false;
+	}
+
+	onmousemove = function(e) {
+		if (window.mousedown) {
+			var map = document.getElementById('map');
+			map.scrollTop -= e.movementY;
+			map.scrollLeft -= e.movementX;
+		}
+	}
+
+	onchange = function(e) {
+		if (e.target instanceof HTMLInputElement) {
+			document.location.hash = getChecked().join(',')
+		}
+	}
+});
+
+	</script>
+</head>
+<body>
+<input type="checkbox" id="blur2"><label for="blur2">Blur 2px</label>
+<input type="checkbox" id="blur5" checked><label for="blur5">Blur 5px</label>
+<input type="checkbox" id="darken15"><label for="darken15">Darken 15%</label>
+<input type="checkbox" id="darken30"><label for="darken30">Darken 30%</label>
+<input type="checkbox" id="contrast50"><label for="contrast50">Low contrast 80%</label>
+<input type="checkbox" id="contrast100"><label for="contrast100">Low contrast 50%</label>
+<input type="checkbox" id="gray50"><label for="gray50">Grayscale 50%</label>
+<input type="checkbox" id="gray100" checked><label for="gray100">Grayscale 100%</label>
+<input type="checkbox" id="sepia"><label for="sepia">Sepia 100%</label>
+<input type="checkbox" id="opacity"><label for="opacity" title="Applies an opacity filter to *only* the intermediate layers; if only layer 0 and 1 are shown, this does nothing.">Opacity 50% (intermediate layers)</label>
+<input type="checkbox" id="hide"><label for="hide">Hide intermediate</label>
+<br/>
+<input type="radio" name="layer" id="layer0"><label for="layer0">Surface</label>
+<input type="radio" name="layer" id="layer1"><label for="layer1">Layer 1</label>
+<input type="radio" name="layer" id="layer2" checked><label for="layer2">Layer 2</label>
+<input type="radio" name="layer" id="layer3"><label for="layer3">Layer 3</label>
+<div id="map">
+	<img src="overworld_0.png"/>
+	<img src="overworld_1.png"/>
+	<img src="overworld_2.png"/>
+	<img src="overworld_3.png"/>
+</div>
+</body>
+</html>
