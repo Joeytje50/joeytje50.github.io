@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>OSRS Underground Layers</title>
+	<link rel="stylesheet" href="mapcomp.css">
+	<script src="mapcomp.js"></script>
+</head>
+<body>
+<input type="checkbox" id="blur1"><label for="blur1">Blur 1px</label>
+<input type="checkbox" id="blur2"><label for="blur2"> 2px</label>
+<input type="checkbox" id="blur5"><label for="blur5"> 5px</label>
+<big>|</big>
+<input type="checkbox" id="darken15"><label for="darken15">Darken 15%</label>
+<input type="checkbox" id="darken30"><label for="darken30"> 30%</label>
+<input type="checkbox" id="darken50"><label for="darken50"> 50%</label>
+<big>|</big>
+<input type="checkbox" id="contrast80"><label for="contrast80">Low contrast 80%</label>
+<input type="checkbox" id="contrast50"><label for="contrast50"> 50%</label>
+<big>|</big>
+<input type="checkbox" id="gray50"><label for="gray50">Grayscale 50%</label>
+<input type="checkbox" id="gray100"><label for="gray100"> 100%</label>
+<big>|</big>
+<input type="checkbox" id="sepia"><label for="sepia">Sepia 100%</label>
+<input type="checkbox" id="opacity"><label for="opacity" title="Apply an opacity filter to *only* the intermediate layers; if only layer 0 and 1 are shown, this does nothing.">Opacity 50%</label>
+<input type="checkbox" id="hide"><label for="hide">Hide intermediate</label>
+<input type="checkbox" id="shadow"><label for="shadow" title="Apply drop shadow to current layer only.">Shadow</label>
+<br/>
+<input type="radio" name="layer" id="layer0"><label for="layer0">Surface</label>
+<input type="radio" name="layer" id="layer1"><label for="layer1">Layer 1</label>
+<input type="radio" name="layer" id="layer2" checked><label for="layer2">Layer 2</label>
+<input type="radio" name="layer" id="layer3"><label for="layer3">Layer 3</label>
+<div id="map">
+	<img src="underground_0.png"/>
+	<img src="underground_1.png"/>
+	<img src="underground_2.png"/>
+	<img src="underground_3.png"/>
+</div>
+</body>
+</html>
