@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	onmousemove = function(e) {
 		if (window.mousedown) {
 			var map = document.getElementById('map');
-			map.scrollTop -= e.movementY;
+			map.scrollTop += e.movementY;
 			map.scrollLeft -= e.movementX;
 		}
 	}
