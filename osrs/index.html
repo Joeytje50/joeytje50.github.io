@@ -55,10 +55,12 @@ html, body {
 	filter: drop-shadow(var(--shadow)) !important;
 }
 
+#blur1:checked ~ #map img { --blur: 1px; }
 #blur2:checked ~ #map img { --blur: 2px; }
 #blur5:checked ~ #map img { --blur: 5px; }
 #darken15:checked ~ #map img { --darken: 85%; }
 #darken30:checked ~ #map img { --darken: 70%; }
+#darken50:checked ~ #map img { --darken: 50%; }
 #contrast50:checked ~ #map img { --contrast: 80%; }
 #contrast100:checked ~ #map img { --contrast: 50%; }
 #gray50:checked ~ #map img { --grayscale: 50%; }
@@ -132,18 +134,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	</script>
 </head>
 <body>
-<input type="checkbox" id="blur2"><label for="blur2">Blur 2px</label>
-<input type="checkbox" id="blur5"><label for="blur5">Blur 5px</label>
+<input type="checkbox" id="blur1"><label for="blur1">Blur 1px</label>
+<input type="checkbox" id="blur2"><label for="blur2"> 2px</label>
+<input type="checkbox" id="blur5"><label for="blur5"> 5px</label>
+<big>|</big>
 <input type="checkbox" id="darken15"><label for="darken15">Darken 15%</label>
-<input type="checkbox" id="darken30"><label for="darken30">Darken 30%</label>
+<input type="checkbox" id="darken30"><label for="darken30"> 30%</label>
+<input type="checkbox" id="darken50"><label for="darken50"> 50%</label>
+<big>|</big>
 <input type="checkbox" id="contrast50"><label for="contrast50">Low contrast 80%</label>
-<input type="checkbox" id="contrast100"><label for="contrast100">Low contrast 50%</label>
+<input type="checkbox" id="contrast100"><label for="contrast100"> 50%</label>
+<big>|</big>
 <input type="checkbox" id="gray50"><label for="gray50">Grayscale 50%</label>
-<input type="checkbox" id="gray100"><label for="gray100">Grayscale 100%</label>
+<input type="checkbox" id="gray100"><label for="gray100"> 100%</label>
+<big>|</big>
 <input type="checkbox" id="sepia"><label for="sepia">Sepia 100%</label>
-<input type="checkbox" id="opacity"><label for="opacity" title="Apply an opacity filter to *only* the intermediate layers; if only layer 0 and 1 are shown, this does nothing.">Opacity 50% (intermediate layers)</label>
+<input type="checkbox" id="opacity"><label for="opacity" title="Apply an opacity filter to *only* the intermediate layers; if only layer 0 and 1 are shown, this does nothing.">Opacity 50%</label>
 <input type="checkbox" id="hide"><label for="hide">Hide intermediate</label>
-<input type="checkbox" id="shadow"><label for="shadow" title="Apply drop shadow to current layer only.">Drop shadow</label>
+<input type="checkbox" id="shadow"><label for="shadow" title="Apply drop shadow to current layer only.">Shadow</label>
 <br/>
 <input type="radio" name="layer" id="layer0"><label for="layer0">Surface</label>
 <input type="radio" name="layer" id="layer1"><label for="layer1">Layer 1</label>
