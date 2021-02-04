@@ -14,13 +14,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	var hash = document.location.hash.substr(1).split(',');
 
 	for (var h of hash) {
+		console.log(h)
 		let id = document.getElementById(h);
 		if (h[1] == '=') {
 			let pos = parseInt(h.substr(2));
 			if (h[0] == 'x') {
-				map.scrollLeft = pos;
+				map.scrollLeft = Math.max(pos, 1);
 			} else if (h[0] == 'y') {
-				map.scrollTop = pos;
+				map.scrollTop = Math.max(pos, 1);
 			}
 		} else if (id) {
 			id.checked = true;
