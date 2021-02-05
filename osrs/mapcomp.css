@@ -10,6 +10,8 @@ html, body {
 	--sepia: 0%;
 	--opacity: 100%;
 	--shadow: 0px 0px #000;
+	background: #071022;
+	color: #cbd9f4;
 }
 [title] {
 	cursor: help;
@@ -65,3 +67,20 @@ html, body {
 #opacity:checked ~ #map img + img { --opacity: 50%; }
 #hide:checked ~ #map img + img { --opacity: 0%; }
 #shadow:checked ~ #map img { --shadow: 2px 2px 3px #000; }
+
+@media screen and ( max-height: 27em ) {
+	body {
+		margin: 0;
+		padding: 0;
+	}
+
+	body > * {
+		display: none;
+	}
+
+	#map {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+}
